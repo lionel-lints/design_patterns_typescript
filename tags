@@ -1,0 +1,31 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ConcreteSubject	src/Observer/Subject.ts	/^class ConcreteSubject implements Subject {$/;"	c
+Hello	src/index.ts	/^interface Hello {$/;"	i
+HelloThere	src/index.ts	/^class HelloThere implements Hello {$/;"	c
+Subject	src/Observer/Subject.ts	/^interface Subject {$/;"	i
+constructor	src/Observer/Subject.ts	/^  constructor(){$/;"	m
+constructor	src/index.ts	/^  constructor(){$/;"	m
+count	src/index.ts	/^  count(): number,$/;"	m
+count	src/index.ts	/^  count(){$/;"	m
+currCount	src/index.ts	/^  currCount:number = 0;$/;"	m
+currCount	src/index.ts	/^  currCount:number,$/;"	m
+greet	src/index.ts	/^  greet(): string,$/;"	m
+greet	src/index.ts	/^  greet(){$/;"	m
+greeting	src/index.ts	/^  greeting:String = 'Hello There!';$/;"	m
+greeting	src/index.ts	/^  greeting:String,$/;"	m
+newThing	src/index.ts	/^  newThing(yeet:number): string {$/;"	m
+notifyObservers	src/Observer/Subject.ts	/^  notifyObservers(): void,$/;"	m
+notifyObservers	src/Observer/Subject.ts	/^  notifyObservers(){$/;"	m
+observerArray	src/Observer/Subject.ts	/^  observerArray:<Observer>[] = [];$/;"	m
+observerHash	src/Observer/Subject.ts	/^  observerHash:{ String: <Observer>} = [];$/;"	m
+ping	src/index.ts	/^  ping(): void,$/;"	m
+ping	src/index.ts	/^  ping(){$/;"	m
+subscribeObserver	src/Observer/Subject.ts	/^  subscribeObserver(){$/;"	m
+subscribeObserver	src/Observer/Subject.ts	/^  subscribeObserver(<Observer>): void,$/;"	m
+unsubscribeObserver	src/Observer/Subject.ts	/^  unsubscribeObserver(){$/;"	m
+unsubscribeObserver	src/Observer/Subject.ts	/^  unsubscribeObserver(<Observer>): void,$/;"	m

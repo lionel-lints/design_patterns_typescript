@@ -1,4 +1,4 @@
-import { Observer, NewsletterSubscriber } from '../../../src/Observer/Observer';
+import { NewsletterSubscriber } from '../../../src/Observer/Observer';
 import { expect } from 'chai';
 import 'mocha';
 
@@ -29,8 +29,4 @@ describe('NewsletterSubscriber', () => {
     expect(newsSub.currentSubscriptions['newsletter B']).to.exist
     expect(Array.isArray(newsSub.currentSubscriptions['newsletter B'])).to.be.true
   });
-});
-describe('Hello function', () => {
-
-
 });

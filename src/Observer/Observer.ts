@@ -1,6 +1,6 @@
 interface Observer {
   currentSubscriptions: { [newsletters: string]: string[]};
-  update (subscriptionName: string, currentArticles: string[], unsubscribe:boolean):void;
+  update (subscriptionName: string, currentArticles: string[], unsubscribe: boolean): void;
 }
 
 class NewsletterSubscriber implements Observer {

@@ -62,3 +62,11 @@ class EditableEditedDocument implements DocumentState {
     return new EditableEditedDocument(newText, this.isLocked)
   }
 }
+
+export {
+  LockedOriginalDocument,
+  EditableOriginalDocument,
+  LockedEditedDocument,
+  EditableEditedDocument,
+}
+

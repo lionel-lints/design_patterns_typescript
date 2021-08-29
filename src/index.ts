@@ -1,6 +1,7 @@
-import mainObserver from './Observer/main'
-import mainStrategy from './Strategy/main'
-import mainCommand from './Command/main'
+//import mainObserver from './Observer/main'
+// import mainStrategy from './Strategy/main'
+// import mainCommand from './Command/main'
+import mainState from './State/main'
 
 
 const main = ():void => {
@@ -16,7 +17,7 @@ const main = ():void => {
   // console.log("''''''''''''''''''''''''''''''''''''''''''''''''''")
   // console.log("")
   // mainObserver()
-  mainCommand()
+  mainState()
 }
 
 main()

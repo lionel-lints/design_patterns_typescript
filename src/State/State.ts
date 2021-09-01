@@ -12,7 +12,7 @@ class LockedOriginalDocument implements DocumentState {
     console.log('LockedOriginalDocument query plan --> no changes, so no query issued')
   }
   toggleLock(){
-    return new EditableOriginalDocument(this.text, !this.isLocked)
+    return new EditableEditedDocument(this.text, !this.isLocked)
   }
   update(newText: string){
     console.error(`It is not possible to update a LockedOriginalDocument with ${newText}, UNLOCK it FIRST`)
@@ -45,7 +45,7 @@ class LockedEditedDocument implements DocumentState {
   }
   update(newText: string){
     console.error(`It is not possible to update a LockedOriginalDocument with ${newText}`)
-    return new LockedOriginalDocument(this.text, this.isLocked) 
+    return new LockedEditedDocument(this.text, this.isLocked) 
   }
 }
 

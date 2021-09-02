@@ -17,7 +17,6 @@ type archiveReason = {
     automationWorkflowTriggerId?: string; // where new triggers will be moved to
   }
 }
- 
 
 interface ArchiveReasonState {
   draftManager?: DraftManager;
@@ -48,8 +47,38 @@ class PublishedDocument implements ArchiveReasonState {
     console.log('published document needs no query, this function wont call anything, just return undefined')
   }
 
+  addBulkProfileDestination(destinationProfileId: string){
+    const currState = { ...this.currData };
+    if(currState.bulkMoveDestinationIds !== undefined){
+      currState.bulkMoveDestinationIds.profileId = destinationProfileId;
+    } else {
+      currState.bulkMoveDestinationIds = { profileId: destinationProfileId };
+    }
+
+    return this._returnNewInstance(currState);
+  }
+
+  addBulkAutomationDestination(destinationWorkflowTriggerId: string){
+    const currState = { ...this.currData };
+    if(currState.bulkMoveDestinationIds !== undefined){
+      currState.bulkMoveDestinationIds.automationWorkflowTriggerId = destinationWorkflowTriggerId;
+    } else {
+      currState.bulkMoveDestinationIds = { automationWorkflowTriggerId: destinationWorkflowTriggerId };
+    }
+
+    return this._returnNewInstance(currState);
+  }
+
   _isBlocked(){
-    return this.currData.profileIds.length > 0 || this.currData.automationWorkflowTriggerIds.length > 0;
+    let isBlockedByBulkProfiles: boolean = this.currData.profileIds.length > 0
+    let isBlockedByBulkAutomations: boolean = this.currData.automationWorkflowTriggerIds.length > 0
+
+    if(this.currData.bulkMoveDestinationIds !== undefined){
+      isBlockedByBulkProfiles = isBlockedByBulkProfiles && this.currData.bulkMoveDestinationIds.profileId === undefined;
+      isBlockedByBulkAutomations = isBlockedByBulkAutomations && this.currData.bulkMoveDestinationIds.automationWorkflowTriggerId === undefined;
+    }
+
+    return isBlockedByBulkProfiles || isBlockedByBulkAutomations;
   }
 
   _returnNewInstance(data: archiveReason){
@@ -99,7 +128,37 @@ class PublishableDraft implements ArchiveReasonState {
   }
 
   _isBlocked(){
-    return this.currData.profileIds.length > 0 || this.currData.automationWorkflowTriggerIds.length > 0;
+    let isBlockedByBulkProfiles: boolean = this.currData.profileIds.length > 0
+    let isBlockedByBulkAutomations: boolean = this.currData.automationWorkflowTriggerIds.length > 0
+
+    if(this.currData.bulkMoveDestinationIds !== undefined){
+      isBlockedByBulkProfiles = isBlockedByBulkProfiles && this.currData.bulkMoveDestinationIds.profileId === undefined;
+      isBlockedByBulkAutomations = isBlockedByBulkAutomations && this.currData.bulkMoveDestinationIds.automationWorkflowTriggerId === undefined;
+    }
+
+    return isBlockedByBulkProfiles || isBlockedByBulkAutomations;
+  }
+
+  addBulkProfileDestination(destinationProfileId: string){
+    const currState = { ...this.currData };
+    if(currState.bulkMoveDestinationIds !== undefined){
+      currState.bulkMoveDestinationIds.profileId = destinationProfileId;
+    } else {
+      currState.bulkMoveDestinationIds = { profileId: destinationProfileId };
+    }
+
+    return this._returnNewInstance(currState);
+  }
+
+  addBulkAutomationDestination(destinationWorkflowTriggerId: string){
+    const currState = { ...this.currData };
+    if(currState.bulkMoveDestinationIds !== undefined){
+      currState.bulkMoveDestinationIds.automationWorkflowTriggerId = destinationWorkflowTriggerId;
+    } else {
+      currState.bulkMoveDestinationIds = { automationWorkflowTriggerId: destinationWorkflowTriggerId };
+    }
+
+    return this._returnNewInstance(currState);
   }
 
   _returnNewInstance(data: archiveReason){
@@ -146,7 +205,37 @@ class BlockedDraft implements ArchiveReasonState {
   }
 
   _isBlocked(){
-    return this.currData.profileIds.length > 0 || this.currData.automationWorkflowTriggerIds.length > 0;
+    let isBlockedByBulkProfiles: boolean = this.currData.profileIds.length > 0
+    let isBlockedByBulkAutomations: boolean = this.currData.automationWorkflowTriggerIds.length > 0
+
+    if(this.currData.bulkMoveDestinationIds !== undefined){
+      isBlockedByBulkProfiles = isBlockedByBulkProfiles && this.currData.bulkMoveDestinationIds.profileId === undefined;
+      isBlockedByBulkAutomations = isBlockedByBulkAutomations && this.currData.bulkMoveDestinationIds.automationWorkflowTriggerId === undefined;
+    }
+
+    return isBlockedByBulkProfiles || isBlockedByBulkAutomations;
+  }
+
+  addBulkProfileDestination(destinationProfileId: string){
+    const currState = { ...this.currData };
+    if(currState.bulkMoveDestinationIds !== undefined){
+      currState.bulkMoveDestinationIds.profileId = destinationProfileId;
+    } else {
+      currState.bulkMoveDestinationIds = { profileId: destinationProfileId };
+    }
+
+    return this._returnNewInstance(currState);
+  }
+
+  addBulkAutomationDestination(destinationWorkflowTriggerId: string){
+    const currState = { ...this.currData };
+    if(currState.bulkMoveDestinationIds !== undefined){
+      currState.bulkMoveDestinationIds.automationWorkflowTriggerId = destinationWorkflowTriggerId;
+    } else {
+      currState.bulkMoveDestinationIds = { automationWorkflowTriggerId: destinationWorkflowTriggerId };
+    }
+
+    return this._returnNewInstance(currState);
   }
 
   _returnNewInstance(data: archiveReason){
@@ -181,4 +270,3 @@ export {
   PublishableDraft,
   BlockedDraft,
 }
-

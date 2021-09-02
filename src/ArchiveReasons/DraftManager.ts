@@ -11,8 +11,14 @@ interface Context {
 class DraftManager implements Context {
   constructor(public archiveReasonList: ArchiveReasonState[]){
   }
+
   addNewDraftToList(draft: PublishableDraft | BlockedDraft){
     this.archiveReasonList.push(draft);
+  }
+
+  reorderDraft(currInd: number, destinationIndex: number){
+    let poppedOutDraft = this.archiveReasonList.splice(currInd, 1)[0];
+    this.archiveReasonList.splice(destinationIndex, 0, poppedOutDraft);
   }
 }
 

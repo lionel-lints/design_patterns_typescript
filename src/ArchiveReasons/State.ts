@@ -20,11 +20,17 @@ type archiveReason = {
 
 interface ArchiveReasonState {
   draftManager?: DraftManager;
+
   getOriginalState(): archiveReason;
   getCurrState(): archiveReason;
+
   executeTask (): void | Error;  // fires the taskqueue task or DB update, depending on the concreteState
+  _isBlocked(): boolean;
+
   toggleActiveState(): PublishedDocument | PublishableDraft | BlockedDraft; // toggles the active status of an archive reason
   updateText(newText: string): PublishedDocument | PublishableDraft | BlockedDraft;
+  addBulkProfileDestination(destinationProfileId: string): PublishedDocument | PublishableDraft | BlockedDraft;
+  addBulkAutomationDestination(destinationWorkflowTriggerId: string): PublishedDocument | PublishableDraft | BlockedDraft;
 }
 
 class PublishedDocument implements ArchiveReasonState {
@@ -44,7 +50,6 @@ class PublishedDocument implements ArchiveReasonState {
   executeTask() {
     // document matches the published state, no query required
     // just return void
-    console.log('published document needs no query, this function wont call anything, just return undefined')
   }
 
   addBulkProfileDestination(destinationProfileId: string){
@@ -124,7 +129,16 @@ class PublishableDraft implements ArchiveReasonState {
   executeTask() {
     // no direct return,
     // we just fire off the associated query as a side effect here
-    console.log('PublishableDraft query will be executed like this console.log')
+    // if there are bulk queries to move we fire that taskqueue trigger
+    if(this.currData.bulkMoveDestinationIds === undefined){
+      console.log('no builk moves, we fire a simple db update')
+    } else if(this.currData.bulkMoveDestinationIds.profileId === undefined){
+      console.log('no profile id, fire a bulk automationWorkflow trigger task')
+    } else if(this.currData.bulkMoveDestinationIds.automationWorkflowTriggerId === undefined){
+      console.log('no automationWorkflow triggers, fire bulk profile move task')
+    } else {
+      console.log('fire task which both moves triggers and profiles')
+    }
   }
 
   _isBlocked(){
@@ -201,7 +215,7 @@ class BlockedDraft implements ArchiveReasonState {
   }
 
   executeTask() {
-    throw new Error('blocked task cannot be queried')
+    throw new Error(`blocked taskID: ${this.currData._id} cannot be queried`)
   }
 
   _isBlocked(){

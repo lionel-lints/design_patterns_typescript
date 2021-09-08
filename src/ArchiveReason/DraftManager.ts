@@ -19,7 +19,7 @@ interface Draft {
   addNewArchiveReason(draft: archiveReason): void;
   enableArchiveReason(archiveReasonId: string): void;
   disableArchiveReason(archiveReasonId: string): void;
-  editArchiveReason(draft: archiveReason): void;
+  editArchiveReason(archiveReasonId: string, newText: string): void;
   reorderArchiveReasons(currInd: number, destinationIndex: number): void;
   execute(): void
 }
@@ -65,9 +65,16 @@ class DraftManager implements Draft {
     }
   }
 
-  editArchiveReason(draft: archiveReason){
-    const currInd = this._getIndexOfElementById(draft._id);
-    if(this._archiveReasonHasUniqueText(draft) && currInd >= 0){
+  editArchiveReason(archiveReasonId: string, newText: string){
+    const currInd = this._getIndexOfElementById(archiveReasonId);
+    let draft;
+
+    if(currInd >= 0){
+      draft = this._shallowCopyObject(this.getCurrState()[currInd]);
+      draft.text = newText;
+    }
+
+    if(draft && this._archiveReasonHasUniqueText(draft)){
       this._updateArchiveReason(draft);
     }
   }

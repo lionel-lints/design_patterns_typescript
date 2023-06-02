@@ -1,12 +1,12 @@
-import { Strategy, ConversionOutput } from './Strategy'
+import { Strategy } from './Strategy'
 
 interface Context {
   strategy?: Strategy;
-  doConversion (dataSetName:string): void;
+  anonymize(profileId: string): void;
   setStrategy (strategy: Strategy): void; 
 }
 
-class concreteContext implements Context {
+class anonymizationContext implements Context {
 
   constructor(public strategy:Strategy){}
 
@@ -14,9 +14,9 @@ class concreteContext implements Context {
     this.strategy = strategy;
   } 
 
-  doConversion (dataSetName:string){
-    return this.strategy.convert(dataSetName);
+  anonymize(profileId: string){
+    return this.strategy.anonymize(profileId);
   }
 }
 
-export { Context, concreteContext };
+export { Context, anonymizationContext };

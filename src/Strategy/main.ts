@@ -1,23 +1,13 @@
-import { concreteContext } from './Context'
-import { CSVConverter, binaryStringConverter, JSONConverter } from './Strategy'
+import { anonymizationContext } from './Context'
+import { EmailAnonymizer } from './Strategy'
 
-const main = () => {
+const main = (profileId, configuration) => {
 
-  let bCon = new binaryStringConverter()
-  let cCon = new CSVConverter()
-  let jCon = new JSONConverter()
-
-  let cont = new concreteContext(jCon)
+  let eAnon = new EmailAnonymizer()
+  let cont = new anonymizationContext(eAnon)
 
 
-  console.log(cont.doConversion('key1'))
-  console.log(cont.doConversion('key2'))
-  cont.setStrategy(bCon);
-  console.log(cont.doConversion('key1'))
-  console.log(cont.doConversion('key2'))
-  cont.setStrategy(cCon);
-  console.log(cont.doConversion('key1'))
-  console.log(cont.doConversion('key2'))
+  console.log(cont.anonymize('2'))
 }
 
 export default main

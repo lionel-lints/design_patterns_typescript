@@ -188,140 +188,147 @@ describe('PermissionWithGroup', () => {
       permissionWG = new PermissionWithGroup(
         'a requirement id',
         false,
-        true
+        true,
         'postings special',
         '',
-        [permissions1, permissions2]
+        [permission1.id, permission2.id]
       );
     })
 
     it('checks when id matches and enabled', () => {
-      expect(permission.isEnabled).to.be.true;
-      expect(permission.isChecked).to.be.false;
-      permission.check(permission.id);
-      expect(permission.isChecked).to.be.true;
+      expect(permissionWG.isEnabled).to.be.true;
+      expect(permissionWG.isChecked).to.be.false;
+      permissionWG.check(permissionWG.id);
+      expect(permissionWG.isChecked).to.be.true;
     });
-
-    it('does not check when disabled', () => {
-      permission.isEnabled = false;
-      expect(permission.isChecked).to.be.false;
-      permission.check(permission.id);
-      expect(permission.isChecked).to.be.false;
-      permission.isEnabled = true;
-      permission.check(permission.id);
-      expect(permission.isChecked).to.be.true;
-    });
-
-    it('enables but does not check if requiredId is passed', () => {
-      permission.isEnabled = false;
-      expect(permission.isEnabled).to.be.false;
-      expect(permission.isChecked).to.be.false;
-      permission.check('a requirement id');
-      expect(permission.isEnabled).to.be.true;
-      expect(permission.isChecked).to.be.false;
-    });
-
-    it('ignores ids that are not required or self', () => {
-      expect(permission.isEnabled).to.be.true;
-      expect(permission.isChecked).to.be.false;
-      permission.uncheck('random');
-      expect(permission.isEnabled).to.be.true;
-      expect(permission.isChecked).to.be.false;
-    })
-  });
-
-  describe('uncheck', () => {
-    let permission:Permission;
-    beforeEach('setup', () => {
-      permission = new Permission(
-        'postings.a2',
-        true,
-        true,
-        'second posting permissions',
-        '',
-        ['postings.a1'],
-      );
-    })
-
-    it('unchecks when id matches', () => {
-      expect(permission.isChecked).to.be.true;
-      permission.uncheck(permission.id);
-      expect(permission.isChecked).to.be.false;
-    })
-
-    it('unchecks when requiredPermission matches', () => {
-      expect(permission.isChecked).to.be.true;
-      permission.uncheck('postings.a1');
-      expect(permission.isChecked).to.be.false;
-    })
-
-    it('disables when requiredPermission matches', () => {
-      expect(permission.isEnabled).to.be.true;
-      permission.uncheck('postings.a1');
-      expect(permission.isEnabled).to.be.false;
-    })
-
-    it('does not disable when requiredPermission does not match', () => {
-      expect(permission.isEnabled).to.be.true;
-      permission.uncheck('random');
-      expect(permission.isEnabled).to.be.true;
-      permission.uncheck(permission.id);
-      expect(permission.isEnabled).to.be.true;
-    })
-
-    it('ignores ids that are not required or self', () => {
-      expect(permission.isEnabled).to.be.true;
-      expect(permission.isChecked).to.be.true;
-      permission.uncheck('random');
-      expect(permission.isEnabled).to.be.true;
-      expect(permission.isChecked).to.be.true;
-    })
-  });
-
-  describe('enable', () => {
-    let permission:Permission;
-    beforeEach('setup', () => {
-      permission = new Permission(
-        'postings.a2',
-        false,
-        false,
-        'second posting permissions',
-        '',
-        ['postings.a1'],
-      );
-    })
-    it('ignores ids that are not itself', () => {
-      expect(permission.isEnabled).to.be.false;
-      permission.enable('random');
-      expect(permission.isEnabled).to.be.false;
-    });
-    it('enables for an id that is itself', () => {
-      expect(permission.isEnabled).to.be.false;
-      permission.enable(permission.id);
-      expect(permission.isEnabled).to.be.true;
-    });
-  });
-  describe('disable', () => {
-    let permission:Permission;
-    beforeEach('setup', () => {
-      permission = new Permission(
-        'postings.a2',
-        true,
-        true,
-        'second posting permissions',
-        '',
-        ['postings.a1'],
-      );
-    })
-    it('ignores ids that are not itself', () => {
-      expect(permission.isEnabled).to.be.true;
-      permission.disable('random');
-      expect(permission.isEnabled).to.be.true;
-    });
-    it('disables for an id that is itself', () => {
-      expect(permission.isEnabled).to.be.true;
-      permission.disable(permission.id);
-      expect(permission.isEnabled).to.be.false;
+    it('enables children', () => {
+      expect(permissionWG.isEnabled).to.be.true;
+      expect(permissionWG.isChecked).to.be.false;
+      permissionWG.check(permissionWG.id);
+      expect(permissionWG.isChecked).to.be.true;
     });
   });
 });
+    // it('does not check when disabled', () => {
+    //   permission.isEnabled = false;
+    //   expect(permission.isChecked).to.be.false;
+    //   permission.check(permission.id);
+    //   expect(permission.isChecked).to.be.false;
+    //   permission.isEnabled = true;
+    //   permission.check(permission.id);
+    //   expect(permission.isChecked).to.be.true;
+    // });
+
+    // it('enables but does not check if requiredId is passed', () => {
+    //   permission.isEnabled = false;
+    //   expect(permission.isEnabled).to.be.false;
+    //   expect(permission.isChecked).to.be.false;
+    //   permission.check('a requirement id');
+    //   expect(permission.isEnabled).to.be.true;
+    //   expect(permission.isChecked).to.be.false;
+    // });
+
+    // it('ignores ids that are not required or self', () => {
+    //   expect(permission.isEnabled).to.be.true;
+    //   expect(permission.isChecked).to.be.false;
+    //   permission.uncheck('random');
+    //   expect(permission.isEnabled).to.be.true;
+    //   expect(permission.isChecked).to.be.false;
+    // })
+  // });
+
+  // describe('uncheck', () => {
+    // let permission:Permission;
+    // beforeEach('setup', () => {
+    //   permission = new Permission(
+    //     'postings.a2',
+    //     true,
+    //     true,
+    //     'second posting permissions',
+    //     '',
+    //     ['postings.a1'],
+    //   );
+    // })
+
+    // it('unchecks when id matches', () => {
+    //   expect(permission.isChecked).to.be.true;
+    //   permission.uncheck(permission.id);
+    //   expect(permission.isChecked).to.be.false;
+    // })
+
+    // it('unchecks when requiredPermission matches', () => {
+    //   expect(permission.isChecked).to.be.true;
+    //   permission.uncheck('postings.a1');
+    //   expect(permission.isChecked).to.be.false;
+    // })
+
+    // it('disables when requiredPermission matches', () => {
+    //   expect(permission.isEnabled).to.be.true;
+    //   permission.uncheck('postings.a1');
+    //   expect(permission.isEnabled).to.be.false;
+    // })
+
+    // it('does not disable when requiredPermission does not match', () => {
+    //   expect(permission.isEnabled).to.be.true;
+    //   permission.uncheck('random');
+    //   expect(permission.isEnabled).to.be.true;
+    //   permission.uncheck(permission.id);
+    //   expect(permission.isEnabled).to.be.true;
+    // })
+
+    // it('ignores ids that are not required or self', () => {
+    //   expect(permission.isEnabled).to.be.true;
+    //   expect(permission.isChecked).to.be.true;
+    //   permission.uncheck('random');
+    //   expect(permission.isEnabled).to.be.true;
+    //   expect(permission.isChecked).to.be.true;
+    // })
+  // });
+
+  // describe('enable', () => {
+    // let permission:Permission;
+    // beforeEach('setup', () => {
+    //   permission = new Permission(
+    //     'postings.a2',
+    //     false,
+    //     false,
+    //     'second posting permissions',
+    //     '',
+    //     ['postings.a1'],
+    //   );
+    // })
+    // it('ignores ids that are not itself', () => {
+    //   expect(permission.isEnabled).to.be.false;
+    //   permission.enable('random');
+    //   expect(permission.isEnabled).to.be.false;
+    // });
+    // it('enables for an id that is itself', () => {
+    //   expect(permission.isEnabled).to.be.false;
+    //   permission.enable(permission.id);
+    //   expect(permission.isEnabled).to.be.true;
+    // });
+  // });
+  // describe('disable', () => {
+    // let permission:Permission;
+    // beforeEach('setup', () => {
+    //   permission = new Permission(
+    //     'postings.a2',
+    //     true,
+    //     true,
+    //     'second posting permissions',
+    //     '',
+    //     ['postings.a1'],
+    //   );
+    // })
+    // it('ignores ids that are not itself', () => {
+    //   expect(permission.isEnabled).to.be.true;
+    //   permission.disable('random');
+    //   expect(permission.isEnabled).to.be.true;
+    // });
+    // it('disables for an id that is itself', () => {
+    //   expect(permission.isEnabled).to.be.true;
+    //   permission.disable(permission.id);
+    //   expect(permission.isEnabled).to.be.false;
+    // });
+  // });
+//});

@@ -5,8 +5,8 @@ interface Composite {
 }
 
 interface PermissionInterface {
-  enable() void;
-  disable() void;
+  enable(id: Permission['id']): void;
+  disable(id: Permission['id']): void;
 }
 
 class Permission implements Composite, PermissionInterface {
@@ -16,26 +16,36 @@ class Permission implements Composite, PermissionInterface {
     public isEnabled: boolean,
     public displayText: string,
     public helperText: string,
-    public requiredPerrmissionIds: string[]=[],
+    public requiredPermissionIds: string[]=[],
   ){
   }
 
   check(id: Permission['id']): void {
+    if(this.id !== id || this.isEnabled === false) return;
+    this.isChecked = true;
   }
 
   uncheck(id: Permission['id']): void {
+    if(this.requiredPermissionIds.includes(id)){
+      this.disable(this.id);
+      this.isChecked = false;
+    }
+    if(this.id !== id) return;
+    this.isChecked = false;
   }
 
   enable(){
   }
 
-  disable(){
+  disable(id: Permission['id']): void {
+    if(this.id !== id) return;
+    this.isEnabled = false
   }
 }
 
 
 class PermissionWithGroup implements Composite {
-  children = (Permission | PermissionWithGroup)[] = [];
+  children: (Permission | PermissionWithGroup)[] = [];
   constructor(
     public id: string,
     public isChecked: boolean,
@@ -60,7 +70,7 @@ class PermissionWithGroup implements Composite {
 }
 
 class Category implements Composite {
-  children = (Permission | PermissionWithGroup | Category)[] = [];
+  children: (Permission | PermissionWithGroup | Category)[] = [];
   constructor(
   ){
   }

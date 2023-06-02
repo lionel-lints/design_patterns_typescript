@@ -2,6 +2,7 @@
 import mainStrategy from './Strategy/main'
 // import mainCommand from './Command/main'
 // import mainState from './State/main'
+import mainComposite from './Composite_2/main'
 
 
 const main = ():void => {

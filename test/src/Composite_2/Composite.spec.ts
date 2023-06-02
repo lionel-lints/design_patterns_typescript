@@ -7,6 +7,7 @@ import { assert, expect } from 'chai';
 
 describe('Permission', () => {
   let permissionClass = Permission
+
   it('imports correctly', () => {
     expect(permissionClass).to.exist;
   });
@@ -23,11 +24,13 @@ describe('Permission', () => {
         [],
       );
     })
+
     it('checks when enabled', () => {
       expect(permission.isChecked).to.be.false;
       permission.check(permission.id);
       expect(permission.isChecked).to.be.true;
     });
+
     it('does not check when disabled', () => {
       permission.isEnabled = false;
       expect(permission.isChecked).to.be.false;
@@ -37,6 +40,7 @@ describe('Permission', () => {
       permission.check(permission.id);
       expect(permission.isChecked).to.be.true;
     });
+
     it('ignores ids other than itself', () => {
       expect(permission.isChecked).to.be.false;
       permission.check('something');
@@ -56,33 +60,86 @@ describe('Permission', () => {
         ['postings.a1'],
       );
     })
+
     it('unchecks when id matches', () => {
       expect(permission.isChecked).to.be.true;
       permission.uncheck(permission.id);
       expect(permission.isChecked).to.be.false;
     })
+
     it('unchecks when requiredPermission matches', () => {
       expect(permission.isChecked).to.be.true;
       permission.uncheck('postings.a1');
       expect(permission.isChecked).to.be.false;
     })
+
     it('disables when requiredPermission matches', () => {
+      expect(permission.isEnabled).to.be.true;
+      permission.uncheck('postings.a1');
+      expect(permission.isEnabled).to.be.false;
     })
+
+    it('does not disable when requiredPermission does not match', () => {
+      expect(permission.isEnabled).to.be.true;
+      permission.uncheck('random');
+      expect(permission.isEnabled).to.be.true;
+      permission.uncheck(permission.id);
+      expect(permission.isEnabled).to.be.true;
+    })
+
     it('ignores ids that are not required or self', () => {
+      expect(permission.isEnabled).to.be.true;
+      expect(permission.isChecked).to.be.true;
+      permission.uncheck('random');
+      expect(permission.isEnabled).to.be.true;
+      expect(permission.isChecked).to.be.true;
     })
-    // it('does not check when disabled', () => {
-    //   permission.isEnabled = false;
-    //   expect(permission.isChecked).to.be.false;
-    //   permission.check(permission.id);
-    //   expect(permission.isChecked).to.be.false;
-    //   permission.isEnabled = true;
-    //   permission.check(permission.id);
-    //   expect(permission.isChecked).to.be.true;
-    // });
-    // it('ignores ids other than itself', () => {
-    //   expect(permission.isChecked).to.be.false;
-    //   permission.check('something');
-    //   expect(permission.isChecked).to.be.false;
-    // });
+  });
+
+  describe('enable', () => {
+    let permission:Permission;
+    beforeEach('setup', () => {
+      permission = new Permission(
+        'postings.a2',
+        false,
+        false,
+        'second posting permissions',
+        '',
+        ['postings.a1'],
+      );
+    })
+    it('ignores ids that are not itself', () => {
+      expect(permission.isEnabled).to.be.false;
+      permission.enable('random');
+      expect(permission.isEnabled).to.be.false;
+    });
+    it('enables for an id that is itself', () => {
+      expect(permission.isEnabled).to.be.false;
+      permission.enable(permission.id);
+      expect(permission.isEnabled).to.be.true;
+    });
+  });
+  describe('disable', () => {
+    let permission:Permission;
+    beforeEach('setup', () => {
+      permission = new Permission(
+        'postings.a2',
+        true,
+        true,
+        'second posting permissions',
+        '',
+        ['postings.a1'],
+      );
+    })
+    it('ignores ids that are not itself', () => {
+      expect(permission.isEnabled).to.be.true;
+      permission.disable('random');
+      expect(permission.isEnabled).to.be.true;
+    });
+    it('enables for an id that is itself', () => {
+      expect(permission.isEnabled).to.be.true;
+      permission.disable(permission.id);
+      expect(permission.isEnabled).to.be.false;
+    });
   });
 });

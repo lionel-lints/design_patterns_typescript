@@ -21,25 +21,28 @@ class Permission implements Composite, PermissionInterface {
   }
 
   check(id: Permission['id']): void {
-    if(this.id !== id || this.isEnabled === false) return;
-    this.isChecked = true;
+    if(this.id === id && this.isEnabled){
+      this.isChecked = true;
+    }
   }
 
   uncheck(id: Permission['id']): void {
-    if(this.requiredPermissionIds.includes(id)){
-      this.disable(this.id);
-      this.isChecked = false;
-    }
-    if(this.id !== id) return;
+    const shouldDisable = this.requiredPermissionIds.includes(id);
+    if(this.id !== id && !shouldDisable) return;
     this.isChecked = false;
+    if(shouldDisable){
+      this.disable(this.id);
+    }
   }
 
-  enable(){
+  enable(id: Permission['id']): void {
+    if(this.id !== id) return;
+    this.isEnabled = true; 
   }
 
   disable(id: Permission['id']): void {
     if(this.id !== id) return;
-    this.isEnabled = false
+    this.isEnabled = false;
   }
 }
 

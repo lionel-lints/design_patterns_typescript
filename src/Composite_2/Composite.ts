@@ -21,7 +21,10 @@ class Permission implements Composite, PermissionInterface {
   }
 
   check(id: Permission['id']): void {
-    if(this.id === id && this.isEnabled){
+    const shouldEnable = this.requiredPermissionIds.includes(id);
+    if(shouldEnable){
+      this.enable(this.id)
+    } else if(this.id === id && this.isEnabled){
       this.isChecked = true;
     }
   }
@@ -60,6 +63,10 @@ class PermissionWithGroup implements Composite {
   }
 
   check(id: Permission['id']): void {
+    if(this.id === id && this.isEnabled){
+      this.isChecked = true;
+    }
+    this.children.forEach(child => child.check(id));
   }
 
   uncheck(id: Permission['id']): void {

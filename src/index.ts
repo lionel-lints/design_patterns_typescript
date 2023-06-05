@@ -1,18 +1,18 @@
 //import mainObserver from './Observer/main'
-import mainStrategy from './Strategy/main'
+//import mainStrategy from './Strategy/main'
 // import mainCommand from './Command/main'
 // import mainState from './State/main'
-import mainComposite from './Composite_2/main'
+import * as mainComposite from './Composite_2/main'
 
 
 const main = ():void => {
   console.log("")
   console.log("''''''''''''''''''''''''''''''''''''''''''''''''''")
-  console.log("'''''''''''''''''''''STRATEGY'''''''''''''''''''''")
+  console.log("'''''''''''''''''''''COMPOSITE'''''''''''''''''''''")
   console.log("''''''''''''''''''''''''''''''''''''''''''''''''''")
   console.log("")
-  mainStrategy()
-  // console.log("")
+  mainComposite.main()
+  console.log("")
   // console.log("''''''''''''''''''''''''''''''''''''''''''''''''''")
   // console.log("'''''''''''''''''''''OBSERVER'''''''''''''''''''''")
   // console.log("''''''''''''''''''''''''''''''''''''''''''''''''''")
